@@ -14,4 +14,5 @@ urlpatterns = [
     path('token-auth/', obtain_auth_token, name='api_token_auth'),
     path('conversations/<int:conversation_id>/delete_chat/', views.delete_chat, name='delete_chat'),
     path('messages/<int:message_id>/mark_read/', views.mark_message_as_read, name='mark_message_as_read'),
+    path('messages/<int:message_id>/delete/', views.delete_message, name='delete_message'),
 ]

@@ -57,16 +57,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         from asgiref.sync import sync_to_async
         from channels.layers import get_channel_layer
         
-        # Serialize the message for notifications
         from .serializers import MessageSerializer
         message_data = MessageSerializer(message_obj).data
-        
-        # Get channel layer outside of async context
         channel_layer = get_channel_layer()
-        
-        # Notify all participants about the new message
         for participant in conversation.participants.all():
-            # Use sync_to_async since we're in a sync function that was called from async
             @sync_to_async
             def send_notification():
                 async_to_sync(channel_layer.group_send)(
@@ -77,21 +71,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
                         'message': message_data
                     }
                 )
-            
-            # Execute the notification sending
             sync_to_async(send_notification)()
         
         return message_obj
 
 
-# Add this new consumer to your existing consumers.py file
-
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.user_id = self.scope['url_route']['kwargs']['user_id']
         self.notification_group_name = f'notifications_{self.user_id}'
-
-        # Join notification group
         await self.channel_layer.group_add(
             self.notification_group_name,
             self.channel_name
@@ -100,28 +88,22 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
-        # Leave notification group
         await self.channel_layer.group_discard(
             self.notification_group_name,
             self.channel_name
         )
 
-    # Receive message from WebSocket
     async def receive(self, text_data):
-        pass  # We don't expect to receive messages from the client
-
-    # Send notification about new conversation
+        pass  
     async def new_conversation(self, event):
-        # Send message to WebSocket
+       
         await self.send(text_data=json.dumps({
             'type': 'new_conversation',
             'conversation_id': event['conversation_id'],
             'participants': event['participants']
         }))
 
-    # Send notification about new message
     async def new_message(self, event):
-        # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'type': 'new_message',
             'conversation_id': event['conversation_id'],

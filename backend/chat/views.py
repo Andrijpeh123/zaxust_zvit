@@ -8,7 +8,11 @@ from .models import Conversation, Message, Reaction, UserSettings, UserProfile
 from .serializers import (UserSerializer, ConversationSerializer, MessageSerializer, ReactionSerializer,UserSettingsSerializer)
 from rest_framework.parsers import MultiPartParser, FormParser
 from django.core.exceptions import ObjectDoesNotExist
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Conversation
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -38,9 +42,9 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
             except ObjectDoesNotExist:
                 profile = UserProfile.objects.create(user=request.user)
             
-            # Переконуємося що QR-код згенерований
+            
             if not profile.qr_code:
-                profile.save()  # This will trigger QR code generation
+                profile.save()  
             
             print("User profile data:", {
                 'user_id': request.user.id,
@@ -82,16 +86,10 @@ class ConversationViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def clear_chat(self, request, pk=None):
         conversation = self.get_object()
-        
-        # Check if user is a participant in this conversation
         if request.user not in conversation.participants.all():
             return Response({'error': 'You are not a participant in this conversation'}, 
                             status=status.HTTP_403_FORBIDDEN)
-        
-        # Delete all messages in the conversation
         Message.objects.filter(conversation=conversation).delete()
-        
-        # Return success response
         return Response({'status': 'Chat cleared successfully'}, status=status.HTTP_200_OK)
     
     @action(detail=True, methods=['post'])
@@ -117,18 +115,13 @@ class ConversationViewSet(viewsets.ModelViewSet):
         
         if not user_ids:
             return Response({'error': 'At least one user ID is required'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Add the current user to the participants
         user_ids.append(request.user.id)
-        user_ids = list(set(user_ids))  # Remove duplicates
-        
-        # Check if a conversation with these participants already exists
+        user_ids = list(set(user_ids))  
         participants = User.objects.filter(id__in=user_ids)
         
         if participants.count() != len(user_ids):
             return Response({'error': 'One or more users not found'}, status=status.HTTP_400_BAD_REQUEST)
         
-        # Create a new conversation
         conversation = Conversation.objects.create()
         conversation.participants.set(participants)
         
@@ -136,7 +129,6 @@ class ConversationViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# Add this import at the top of the file
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
@@ -144,7 +136,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser, FormParser
 
-# Add this view function
 @api_view(['POST'])
 @permission_classes([AllowAny])
 @parser_classes([MultiPartParser, FormParser])
@@ -206,11 +197,8 @@ class UserSettingsViewSet(viewsets.ModelViewSet):
     def get_object(self):
         settings, created = UserSettings.objects.get_or_create(user=self.request.user)
         return settings
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework import status
-from .models import Conversation
+    
+
 @api_view(['POST', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def delete_chat(request, conversation_id):
@@ -237,3 +225,16 @@ def mark_message_as_read(request, message_id):
         return Response({'error': 'Unauthorized'}, status=403)
     except Message.DoesNotExist:
         return Response({'error': 'Message not found'}, status=404)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_message(request, message_id):
+    try:
+        message = Message.objects.get(id=message_id)
+       
+        if request.user == message.sender:
+            message.delete()
+            return Response({'status': 'success'}, status=status.HTTP_200_OK)
+        return Response({'error': 'Unauthorized'}, status=status.HTTP_403_FORBIDDEN)
+    except Message.DoesNotExist:
+        return Response({'error': 'Message not found'}, status=status.HTTP_404_NOT_FOUND)

@@ -1,6 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios';
 
-// User interface
 export interface User {
   id: number;
   username: string;

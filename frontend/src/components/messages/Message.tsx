@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Message as MessageType, MessageStatus } from '../../types';
+import { Message as MessageType, MessageStatus, Reaction } from '../../types';
 import { getAvatarColor, getInitials } from '../../utils/avatarUtils';
-import { Check, CheckAll, Paperclip, Trash } from 'react-bootstrap-icons';
+import { Check, CheckAll, Paperclip, Trash, EmojiSmile } from 'react-bootstrap-icons';
+import MessageReactions from './MessageReactions';
 import './Message.css';
 
 interface MessageProps {
@@ -13,6 +14,7 @@ interface MessageProps {
 const Message: React.FC<MessageProps> = ({ message, isCurrentUser, onDelete }) => {
   const messageRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [contextMenu, setContextMenu] = useState<{
     show: boolean;
     x: number;
@@ -139,11 +141,23 @@ const Message: React.FC<MessageProps> = ({ message, isCurrentUser, onDelete }) =
     setContextMenu({ ...contextMenu, show: false });
   };
 
+  const handleClick = (e: React.MouseEvent) => {
+    if (e.button === 0) {
+      setShowEmojiPicker(!showEmojiPicker);
+      setContextMenu({ ...contextMenu, show: false });
+    }
+  };
+
+  const handleReactionUpdate = (messageId: number, updatedReactions: Reaction[]) => {
+    console.log('Reactions updated:', updatedReactions);
+  };
+
   return (
     <>
       <div 
         ref={messageRef}
         className={`message-container ${isCurrentUser ? 'current-user' : 'other-user'}`}
+        onClick={handleClick}
         onContextMenu={handleContextMenu}
       >
         <div className="message-content">
@@ -176,6 +190,14 @@ const Message: React.FC<MessageProps> = ({ message, isCurrentUser, onDelete }) =
               {renderMessageStatus()}
             </div>
           </div>
+          
+          <MessageReactions
+            messageId={message.id}
+            reactions={message.reactions || []}
+            onReactionUpdate={handleReactionUpdate}
+            showEmojiPicker={showEmojiPicker}
+            onEmojiPickerClose={() => setShowEmojiPicker(false)}
+          />
         </div>
       </div>
 
