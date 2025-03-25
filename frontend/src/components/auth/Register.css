@@ -9,7 +9,6 @@
   overflow: hidden;
 }
 
-/* Неонові лінії на фоні */
 .register-container::before {
   content: '';
   position: absolute;
@@ -23,7 +22,6 @@
   z-index: 1;
 }
 
-/* Космічний фон */
 .register-container::after {
   content: '';
   position: absolute;
@@ -91,7 +89,6 @@
   }
 }
 
-/* Оновлені стилі для форми */
 .form-control {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -117,7 +114,6 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-/* Неонові кнопки */
 .next-step {
   background: linear-gradient(45deg, #00ff9d, #00ffff);
   border: none;
@@ -157,7 +153,6 @@
   }
 }
 
-/* Стилі для аватара */
 .avatar-preview {
   border: 2px solid #00ff9d;
   box-shadow: 
@@ -173,7 +168,6 @@
     inset 0 0 30px rgba(0, 255, 157, 0.3);
 }
 
-/* Стилі для заголовків */
 .register-header h2 {
   color: #ffffff;
   text-shadow: 
@@ -187,7 +181,6 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Індикатори кроків */
 .register-steps {
   display: flex;
   justify-content: center;
@@ -261,7 +254,6 @@
   border-left-color: #10b981;
 }
 
-/* Повідомлення про помилки */
 .error-message {
   background: rgba(255, 0, 0, 0.1);
   border-left: 4px solid #ff0000;
@@ -269,7 +261,6 @@
   text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
 }
 
-/* Контейнери для етапів */
 .register-step {
   display: none;
   opacity: 0;
@@ -283,17 +274,14 @@
   transform: translateX(0);
 }
 
-/* Перший етап - форма реєстрації */
 .register-form-step {
   width: 100%;
 }
 
-/* Другий етап - завантаження аватару */
 .avatar-step {
   text-align: center;
 }
 
-/* Стилі для аватара */
 .avatar-upload {
   margin: 30px 0;
   text-align: center;
@@ -356,7 +344,6 @@
   color: #a855f7;
 }
 
-/* Кнопки навігації між етапами */
 .step-buttons {
   display: flex;
   gap: 10px;
@@ -387,14 +374,12 @@
   transform: translateY(0);
 }
 
-/* Повідомлення про помилки та успіх */
 .success-message {
   background: #f0fdf4;
   border-left: 4px solid #22c55e;
   color: #22c55e;
 }
 
-/* Анімація завантаження */
 .loading {
   position: relative;
   pointer-events: none;
@@ -418,7 +403,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Адаптивний дизайн */
 @media (max-width: 480px) {
   .register-card {
     padding: 20px;
@@ -450,7 +434,6 @@
   }
 }
 
-/* Стилі валідації */
 .form-control.is-invalid {
   border-color: #ef4444;
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);

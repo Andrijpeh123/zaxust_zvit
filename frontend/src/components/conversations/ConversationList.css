@@ -4,8 +4,8 @@
 
 .conversation-info {
   flex-grow: 1;
-  min-width: 0; /* Для правильного переносу довгого тексту */
-  margin-right: 12px; /* Додаємо відступ справа для іконки */
+  min-width: 0; 
+  margin-right: 12px; 
 }
 
 .conversation-options {
@@ -19,7 +19,7 @@
   opacity: 1;
 }
 
-/* Стилі для кнопки опцій */
+
 .conversation-options::after {
   display: none !important;
 }
@@ -28,7 +28,6 @@
   color: #000;
 }
 
-/* Стилі для випадаючого меню */
 .dropdown-menu {
   min-width: 120px;
 }
@@ -126,8 +125,8 @@
 }
 
 .burger-menu {
-  color: #000;  /* Чорний колір */
-  font-size: 28px;  /* Збільшений розмір */
+  color: #000;  
+  font-size: 28px;  
   cursor: pointer;
   padding: 4px;
   display: flex;

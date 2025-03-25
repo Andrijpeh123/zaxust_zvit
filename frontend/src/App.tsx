@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Navigation from './components/layout/Navigation';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import ChatLayout from './components/layout/ChatLayout';
@@ -18,7 +17,6 @@ function App() {
   return (
     <>
       <Router>
-        <Navigation />
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

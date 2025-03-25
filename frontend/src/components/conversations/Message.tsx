@@ -41,7 +41,6 @@ const Message: React.FC<MessageProps> = ({ message, isCurrentUser }) => {
         />
       );
     } else {
-      // For other file types, show a download link
       return (
         <div className="file-attachment mb-2 p-2 border rounded">
           <a href={url} target="_blank" rel="noopener noreferrer" download>

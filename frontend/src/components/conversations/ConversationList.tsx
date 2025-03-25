@@ -44,8 +44,6 @@ const ConversationList: React.FC = () => {
     return localStorage.getItem('savedMessagesEnabled') === 'true';
   });
   const navigate = useNavigate();
-  
-  // Переміщуємо перевірку користувача всередину useEffect
   useEffect(() => {
     const userStr = localStorage.getItem('user');
     if (!userStr) {
@@ -59,8 +57,6 @@ const ConversationList: React.FC = () => {
       navigate('/login');
       return;
     }
-
-    // Підключаємо WebSocket тільки якщо є ID користувача
     let globalWs: WebSocket | null = null;
     
     const setupWebSocket = () => {
@@ -89,11 +85,7 @@ const ConversationList: React.FC = () => {
         console.error('Error setting up WebSocket:', error);
       }
     };
-
-    // Fetch conversations initially
     fetchConversations();
-    
-    // Setup WebSocket connection
     setupWebSocket();
 
     return () => {
@@ -101,15 +93,12 @@ const ConversationList: React.FC = () => {
         globalWs.close();
       }
     };
-  }, [navigate]); // Додаємо navigate в залежності
-
-  // Зберігаємо закріплені чати в localStorage
+  }, [navigate]); 
   useEffect(() => {
     localStorage.setItem('pinnedChats', JSON.stringify(pinnedChats));
   }, [pinnedChats]);
 
   useEffect(() => {
-    // Слухаємо подію оновлення назви чату
     const handleChatNameUpdate = (event: CustomEvent) => {
       const { chatId, newName } = event.detail;
       setConversations(prevConversations => 
@@ -183,8 +172,6 @@ const ConversationList: React.FC = () => {
     });
     setContextMenu({ show: false, x: 0, y: 0, conversationId: null });
   };
-
-  // Сортуємо розмови: закріплені спочатку
   const sortedConversations = [...conversations].sort((a, b) => {
     const isPinnedA = pinnedChats.includes(a.id);
     const isPinnedB = pinnedChats.includes(b.id);
@@ -192,8 +179,6 @@ const ConversationList: React.FC = () => {
     if (!isPinnedA && isPinnedB) return 1;
     return 0;
   });
-
-  // Закриваємо контекстне меню при кліку поза ним
   useEffect(() => {
     const handleClick = () => {
       setContextMenu({ show: false, x: 0, y: 0, conversationId: null });
@@ -236,7 +221,7 @@ const ConversationList: React.FC = () => {
         </div>
       </div>
 
-      {/* Бокове меню налаштувань */}
+      {}
       <Offcanvas show={showSettings} onHide={() => setShowSettings(false)}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Налаштування</Offcanvas.Title>
@@ -289,7 +274,7 @@ const ConversationList: React.FC = () => {
 
       <div className="flex-grow-1 overflow-auto">
         <ListGroup variant="flush">
-          {/* Показуємо "Збережені повідомлення" тільки якщо увімкнено */}
+          {}
           {savedMessagesEnabled && (
             <ListGroup.Item 
               action 
@@ -311,8 +296,7 @@ const ConversationList: React.FC = () => {
             const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
             const otherUser = conversation.participants.find(p => p.id !== currentUser.id);
             const isPinned = pinnedChats.includes(conversation.id);
-            
-            // Отримуємо збережену назву чату або використовуємо ім'я користувача
+          
             const chatName = localStorage.getItem(`chat_name_${conversation.id}`) || 
                             otherUser?.username || '';
 
@@ -365,7 +349,7 @@ const ConversationList: React.FC = () => {
         />
       )}
 
-      {/* Контекстне меню */}
+      {}
       {contextMenu.show && (
         <div 
           className="context-menu"

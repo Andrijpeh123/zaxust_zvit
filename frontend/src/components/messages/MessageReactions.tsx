@@ -42,8 +42,6 @@ const MessageReactions: React.FC<MessageReactionsProps> = ({
       console.error('Error removing reaction:', error);
     }
   };
-
-  // Group reactions by emoji
   const groupedReactions = reactions.reduce((acc, reaction) => {
     if (!acc[reaction.emoji]) {
       acc[reaction.emoji] = [];

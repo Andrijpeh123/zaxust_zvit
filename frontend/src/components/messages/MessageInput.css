@@ -158,13 +158,11 @@
   }
 }
 
-/* Fix for Bootstrap InputGroup.Text */
 .input-group > .input-group-text {
   padding: 0;
   line-height: 1;
 }
 
-/* Ensure icons are visible */
 .btn svg {
   width: 20px;
   height: 20px;

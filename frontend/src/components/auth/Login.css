@@ -9,7 +9,6 @@
   overflow: hidden;
 }
 
-/* Неонові лінії на фоні */
 .auth-login-container::before {
   content: '';
   position: absolute;
@@ -23,7 +22,6 @@
   z-index: 1;
 }
 
-/* Космічний фон */
 .auth-login-container::after {
   content: '';
   position: absolute;

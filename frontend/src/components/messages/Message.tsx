@@ -1,17 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Message as MessageType, MessageStatus } from '../../types';
 import { getAvatarColor, getInitials } from '../../utils/avatarUtils';
-import { Check, CheckAll, Paperclip } from 'react-bootstrap-icons';
+import { Check, CheckAll, Paperclip, Trash } from 'react-bootstrap-icons';
 import './Message.css';
 
 interface MessageProps {
   message: MessageType;
   isCurrentUser: boolean;
+  onDelete?: (messageId: number) => void;
 }
 
-const Message: React.FC<MessageProps> = ({ message, isCurrentUser }) => {
+const Message: React.FC<MessageProps> = ({ message, isCurrentUser, onDelete }) => {
   const messageRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [contextMenu, setContextMenu] = useState<{
+    show: boolean;
+    x: number;
+    y: number;
+  }>({
+    show: false,
+    x: 0,
+    y: 0,
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -21,8 +31,8 @@ const Message: React.FC<MessageProps> = ({ message, isCurrentUser }) => {
         setIsVisible(entry.isIntersecting);
       },
       {
-        threshold: 0.9, // Збільшуємо поріг - повідомлення має бути майже повністю видимим
-        rootMargin: '0px' // Додаємо явний rootMargin
+        threshold: 0.9, 
+        rootMargin: '0px' 
       }
     );
 
@@ -35,17 +45,29 @@ const Message: React.FC<MessageProps> = ({ message, isCurrentUser }) => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (contextMenu.show && messageRef.current && !messageRef.current.contains(event.target as Node)) {
+        setContextMenu({ ...contextMenu, show: false });
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [contextMenu.show]);
+
   const getMessageStatus = () => {
     console.log('Message status check:', { is_read: message.is_read, isVisible });
     
     if (message.is_read) {
       return MessageStatus.READ;
     }
-    // Якщо повідомлення видиме на екрані - показуємо дві галочки
+    
     if (isVisible) {
       return MessageStatus.DELIVERED;
     }
-    // Якщо не видиме - одну галочку
     return MessageStatus.SENT;
   };
 
@@ -101,43 +123,80 @@ const Message: React.FC<MessageProps> = ({ message, isCurrentUser }) => {
     }
   };
 
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setContextMenu({
+      show: true,
+      x: e.clientX,
+      y: e.clientY,
+    });
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete(message.id);
+    }
+    setContextMenu({ ...contextMenu, show: false });
+  };
+
   return (
-    <div 
-      ref={messageRef}
-      className={`message-container ${isCurrentUser ? 'current-user' : 'other-user'}`}
-    >
-      <div className="message-content">
-        {!isCurrentUser && (
-          <div 
-            className="message-avatar"
-            style={{ backgroundColor: getAvatarColor(message.sender.username) }}
-          >
-            {getInitials(message.sender.username)}
-          </div>
-        )}
-        
-        <div className="message-bubble">
+    <>
+      <div 
+        ref={messageRef}
+        className={`message-container ${isCurrentUser ? 'current-user' : 'other-user'}`}
+        onContextMenu={handleContextMenu}
+      >
+        <div className="message-content">
           {!isCurrentUser && (
-            <div className="sender-name">
-              {message.sender.username}
+            <div 
+              className="message-avatar"
+              style={{ backgroundColor: getAvatarColor(message.sender.username) }}
+            >
+              {getInitials(message.sender.username)}
             </div>
           )}
-          {renderFileContent()}
-          <div className="message-content-wrapper">
-            <span className="message-text">
-              {message.content}
-            </span>
-            <span className="message-time">
-              {new Date(message.timestamp).toLocaleTimeString([], { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-              })}
-            </span>
-            {renderMessageStatus()}
+          
+          <div className="message-bubble">
+            {!isCurrentUser && (
+              <div className="sender-name">
+                {message.sender.username}
+              </div>
+            )}
+            {renderFileContent()}
+            <div className="message-content-wrapper">
+              <span className="message-text">
+                {message.content}
+              </span>
+              <span className="message-time">
+                {new Date(message.timestamp).toLocaleTimeString([], { 
+                  hour: '2-digit', 
+                  minute: '2-digit' 
+                })}
+              </span>
+              {renderMessageStatus()}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      {contextMenu.show && (
+        <div 
+          className="message-context-menu"
+          style={{
+            top: contextMenu.y,
+            left: contextMenu.x,
+          }}
+        >
+          <div 
+            className="message-context-menu-item delete"
+            onClick={handleDelete}
+          >
+            <Trash size={16} />
+            Видалити повідомлення
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

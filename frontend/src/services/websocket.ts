@@ -10,13 +10,12 @@ class WebSocketService {
   private reconnectTimeout: any = null;
 
   connect(conversationId: number, userId: number | undefined) {
-    // Перевіряємо наявність userId
     if (!userId) {
       console.error('No user ID provided for WebSocket connection');
       return;
     }
 
-    this.disconnect(); // Закриваємо попереднє з'єднання, якщо воно є
+    this.disconnect(); 
 
     try {
       this.socket = new WebSocket(`ws://localhost:8000/ws/chat/${conversationId}/`);

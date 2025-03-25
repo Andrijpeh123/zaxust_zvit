@@ -64,7 +64,6 @@
   color: var(--text-color);
 }
 
-/* Анімація для активної теми */
 .theme-preview.active::before {
   content: '';
   position: absolute;

@@ -16,8 +16,6 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ show, onHide, currentUser }
 
   const handleSave = async () => {
     try {
-      // TODO: Додати API запит для оновлення профілю
-      // await updateProfile({ username });
       setEditMode(false);
     } catch (error) {
       console.error('Error updating profile:', error);

@@ -11,7 +11,7 @@ interface MessageInputProps {
   onMessageSent: (message: any) => void;
 }
 
-const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+const MAX_FILE_SIZE = 50 * 1024 * 1024; 
 
 const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSent }) => {
   const [message, setMessage] = useState('');
@@ -27,8 +27,6 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
       setFileError('Файл занадто великий. Максимальний розмір: 50MB');
       return false;
     }
-
-    // Дозволені типи файлів
     const allowedTypes = [
       'image/',
       'video/',

@@ -17,8 +17,6 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const messageInputRef = useRef<HTMLInputElement>(null);
-
-  // Add global event handlers to prevent browser default behavior
   useEffect(() => {
     const handleWindowDragOver = (e: DragEvent) => {
       e.preventDefault();
@@ -36,8 +34,6 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
       window.removeEventListener('drop', handleWindowDrop);
     };
   }, []);
-
-  // Drag and drop handlers
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -53,8 +49,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    // Check if we're leaving to an element outside our container
+
     if (!e.currentTarget.contains(e.relatedTarget as Node)) {
       setIsDragging(false);
     }
@@ -68,8 +63,6 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0];
       handleFileSelection(file);
-      
-      // Focus the message input after dropping a file
       setTimeout(() => {
         if (messageInputRef.current) {
           messageInputRef.current.focus();
@@ -81,11 +74,9 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
   const handleFileSelection = (file: File) => {
     setSelectedFile(file);
     
-    // Determine file type
-    const fileType = file.type.split('/')[0]; // 'image', 'video', etc.
+    const fileType = file.type.split('/')[0]; 
     setFileType(fileType);
     
-    // Create preview for images and videos
     if (fileType === 'image' || fileType === 'video') {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -93,7 +84,6 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
       };
       reader.readAsDataURL(file);
     } else {
-      // For other file types, just show the name
       setFilePreview(null);
     }
   };
@@ -124,25 +114,22 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
       let fileUrl = null;
       let fileMetadata = null;
       
-      // Upload file if selected
       if (selectedFile) {
         const fileData = await uploadFile(selectedFile);
         fileUrl = fileData.url;
         fileMetadata = {
           name: selectedFile.name,
-          type: selectedFile.type || 'application/octet-stream', // Ensure type is never undefined
+          type: selectedFile.type || 'application/octet-stream', 
           size: selectedFile.size
         };
       }
-      
-      // Send message with or without file
       const newMessage = await sendMessage(
         conversationId, 
         message, 
         fileUrl ? { 
           url: fileUrl, 
           name: fileMetadata?.name,
-          type: fileMetadata?.type || 'application/octet-stream', // Ensure type is always a string
+          type: fileMetadata?.type || 'application/octet-stream', 
           size: fileMetadata?.size 
         } : undefined
       );
@@ -178,7 +165,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
       )}
       
       <Form onSubmit={handleSubmit} className="mt-3 message-input-container">
-        {/* File preview area */}
+        {}
         {selectedFile && (
           <div className="selected-file mb-2 p-2 border rounded position-relative">
             <Button 
@@ -247,7 +234,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
             )}
           </Button>
           
-          {/* Hidden file input */}
+          {}
           <input
             type="file"
             ref={fileInputRef}

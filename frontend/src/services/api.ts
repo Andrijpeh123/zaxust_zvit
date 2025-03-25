@@ -266,4 +266,8 @@ export const markMessageAsRead = async (messageId: number): Promise<void> => {
   await api.post(`/messages/${messageId}/mark_read/`);
 };
 
+export const deleteMessage = async (messageId: number): Promise<void> => {
+  await api.delete(`/messages/${messageId}/delete/`);
+};
+
 export default api;

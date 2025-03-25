@@ -20,7 +20,6 @@ const Login: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Check for success message from registration
     const state = location.state as LocationState;
     if (state && state.message) {
       setSuccessMessage(state.message);
@@ -37,22 +36,15 @@ const Login: React.FC = () => {
       console.log('Login response:', data);
 
       if (data && data.token) {
-        // Зберігаємо токен
         localStorage.setItem('token', data.token);
         
-        // Створюємо об'єкт користувача
         const userData = {
-          id: username, // Тимчасово використовуємо username як id
+          id: username, 
           username: username
         };
         
-        // Зберігаємо дані користувача
         localStorage.setItem('user', JSON.stringify(userData));
-        
-        // Встановлюємо заголовок Authorization для майбутніх запитів
         axios.defaults.headers.common['Authorization'] = `Token ${data.token}`;
-        
-        // Перенаправляємо на сторінку розмов
         navigate('/conversations');
       } else {
         setError('Invalid response from server');

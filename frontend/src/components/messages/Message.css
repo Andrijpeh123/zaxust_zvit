@@ -1,4 +1,3 @@
-/* Очистимо всі попередні стилі і напишемо нові */
 .message-container {
   display: flex;
   width: 100%;
@@ -6,12 +5,10 @@
   padding: 0 8px;
 }
 
-/* Контейнер для повідомлень поточного користувача (справа) */
 .message-container.current-user {
   justify-content: flex-end !important;
 }
 
-/* Контейнер для повідомлень інших користувачів (зліва) */
 .message-container.other-user {
   justify-content: flex-start !important;
 }
@@ -23,7 +20,6 @@
   gap: 4px;
 }
 
-/* Для повідомлень поточного користувача змінюємо порядок елементів */
 .current-user .message-content {
   flex-direction: row-reverse;
 }
@@ -39,14 +35,12 @@
   gap: 8px;
 }
 
-/* Стилі для повідомлень поточного користувача */
 .current-user .message-bubble {
   background-color: #0d6efd;
   color: white;
   border-bottom-right-radius: 4px;
 }
 
-/* Стилі для повідомлень інших користувачів */
 .other-user .message-bubble {
   background-color: white;
   color: #1c1e21;
@@ -87,7 +81,7 @@
   color: #666;
 }
 
-/* Аватар */
+
 .message-avatar {
   object-fit: cover;
   border: 2px solid #fff;
@@ -208,7 +202,6 @@
   color: #dc3545 !important;
 }
 
-/* Стилі для повідомлень */
 .justify-content-end .message-card {
   border-bottom-right-radius: 4px !important;
   margin-left: auto;
@@ -231,9 +224,6 @@
   align-items: flex-start;
 }
 
-/* Видаляємо дублікати стилів і виправляємо вирівнювання повідомлень */
-
-/* Базові стилі для аватарів */
 .initial-avatar {
   width: 40px;
   height: 40px;
@@ -251,20 +241,18 @@
   border: 2px solid #fff;
 }
 
-/* Базові стилі для контейнера повідомлення */
+
 .message-container {
   width: 100%;
   margin-bottom: 8px;
   display: flex;
-  justify-content: flex-start; /* За замовчуванням зліва */
+  justify-content: flex-start;
 }
 
-/* Повідомлення поточного користувача (справа) */
 .message-container.current-user {
   justify-content: flex-end !important;
 }
 
-/* Повідомлення інших користувачів (зліва) */
 .message-container.other-user {
   justify-content: flex-start !important;
 }
@@ -276,7 +264,7 @@
   gap: 4px;
 }
 
-/* Важливо: змінюємо порядок елементів для повідомлень поточного користувача */
+
 .current-user .message-wrapper {
   flex-direction: row-reverse !important;
 }
@@ -285,21 +273,20 @@
   border: none !important;
 }
 
-/* Стилі для повідомлень поточного користувача */
+
 .current-user .message-card {
   background-color: #0d6efd !important;
   color: white !important;
   border-radius: 15px 15px 5px 15px !important;
 }
 
-/* Стилі для повідомлень інших користувачів */
+
 .other-user .message-card {
   background-color: white !important;
   color: #1c1e21 !important;
   border-radius: 15px 15px 15px 5px !important;
 }
 
-/* Стилі для часу повідомлення */
 .message-time {
   font-size: 9px;
   margin-top: 1px;
@@ -346,7 +333,6 @@
   background-color: #e4e6eb;
 }
 
-/* Решта ваших стилів залишається без змін */
 .reaction-badge {
   display: inline-flex;
   align-items: center;
@@ -450,7 +436,6 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Three dots menu styling */
 .message-options {
   position: absolute;
   top: 8px;
@@ -524,7 +509,6 @@
   color: #212529;
 }
 
-/* Додаємо стилі для статусу повідомлення */
 .message-info {
   display: flex;
   align-items: center;
@@ -562,7 +546,6 @@
   opacity: 1;
 }
 
-/* Оновлюємо стилі для контейнера часу та статусу */
 .message-time {
   font-size: 9px;
   white-space: nowrap;
@@ -571,4 +554,36 @@
 
 .message-text {
   margin-bottom: 0;
+}
+
+.message-context-menu {
+  position: fixed;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 4px 0;
+  min-width: 150px;
+  z-index: 1000;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.message-context-menu-item {
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.message-context-menu-item:hover {
+  background-color: #f8f9fa;
+}
+
+.message-context-menu-item.delete {
+  color: #dc3545;
+}
+
+.message-context-menu-item.delete:hover {
+  background-color: #dc35451a;
 }

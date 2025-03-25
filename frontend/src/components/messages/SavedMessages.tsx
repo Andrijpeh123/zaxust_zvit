@@ -48,7 +48,7 @@ const SavedMessages: React.FC = () => {
 
   const handleAddReaction = (messageId: number, emoji: string, event?: React.MouseEvent) => {
     if (event) {
-      event.stopPropagation(); // Зупиняємо спливання події
+      event.stopPropagation(); 
     }
     
     setMessages(messages.map(message => {
@@ -107,7 +107,7 @@ const SavedMessages: React.FC = () => {
 
   return (
     <Container fluid className="chat-container h-100 d-flex flex-column p-0">
-      {/* Хедер чату */}
+      {}
       <div className="chat-header p-3 border-bottom d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center">
           <div className="saved-messages-avatar me-3">
@@ -125,7 +125,7 @@ const SavedMessages: React.FC = () => {
         </div>
       </div>
 
-      {/* Контейнер повідомлень */}
+      {}
       <div className="messages-container flex-grow-1 overflow-auto p-3">
         {messages.length === 0 ? (
           <div className="h-100 d-flex flex-column justify-content-center align-items-center text-center">
@@ -161,7 +161,7 @@ const SavedMessages: React.FC = () => {
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleAddReaction(message.id, emoji, e);
-                                // Закриваємо dropdown після вибору
+                                
                                 const dropdownToggle = e.currentTarget.closest('.dropdown')?.querySelector('.dropdown-toggle');
                                 if (dropdownToggle) {
                                   (dropdownToggle as HTMLElement).click();
@@ -195,7 +195,7 @@ const SavedMessages: React.FC = () => {
         )}
       </div>
 
-      {/* Футер з полем вводу */}
+      {}
       <div className="chat-footer p-3 border-top">
         <Form onSubmit={handleSubmit} className="d-flex gap-2">
           <Form.Control

@@ -1,6 +1,3 @@
-// Створіть цей файл, якщо він ще не існує
-
-// Генерує колір на основі імені користувача
 export const generateColorFromUsername = (username: string): string => {
   let hash = 0;
   for (let i = 0; i < username.length; i++) {
@@ -14,7 +11,6 @@ export const generateColorFromUsername = (username: string): string => {
   return `#${'00000'.substring(0, 6 - c.length)}${c}`;
 };
 
-// Отримує першу літеру імені користувача для аватарки
 export const getInitial = (username: string): string => {
   return username.charAt(0).toUpperCase();
 };

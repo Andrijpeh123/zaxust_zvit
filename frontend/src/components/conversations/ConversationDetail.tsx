@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col, Modal } from 'react-bootstrap';
-import { getConversation, getMessages, sendMessage, clearChat, deleteChat } from '../../services/api';
+import { getConversation, getMessages, sendMessage, clearChat, deleteChat, deleteMessage } from '../../services/api';
 import WebSocketService from '../../services/websocket';
-import { Message as MessageType, Reaction, MessageStatus, User } from '../../types';  // Додаємо імпорт User
+import { Message as MessageType, Reaction, MessageStatus, User } from '../../types';  
 import Message from '../messages/Message';
 import { toast } from 'react-toastify';
-// Remove this duplicate import
-// import { clearChat } from '../../services/api';
 import { ThreeDotsVertical } from 'react-bootstrap-icons';
 import { getAvatarColor, getInitials } from '../../utils/avatarUtils';
 import './ConversationDetail.css';
@@ -25,10 +23,7 @@ const ConversationDetail: React.FC = () => {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
   console.log('Current user from localStorage:', currentUser);
-  // Add this with your other state variables
   const [showOptions, setShowOptions] = useState(false);
-  
-  // Додаємо стани для пошуку
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredMessages, setFilteredMessages] = useState<MessageType[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -40,7 +35,6 @@ const ConversationDetail: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
-  // Додаємо useEffect для фільтрації повідомлень
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredMessages(messages);
@@ -51,23 +45,18 @@ const ConversationDetail: React.FC = () => {
       setFilteredMessages(filtered);
     }
   }, [searchTerm, messages]);
-
-  // Додаємо функцію для очищення пошуку
   const clearSearch = () => {
     setSearchTerm('');
     setIsSearching(false);
   };
 
-  // Додаємо функцію для відкриття пошуку
   const toggleSearch = () => {
     setIsSearching(!isSearching);
     setShowOptions(false);
   };
 
-  // Scroll to bottom of messages only if user is at the bottom
   useEffect(() => {
     if (messagesContainerRef.current) {
-      // Only auto-scroll if user is at the bottom of the container
       const container = messagesContainerRef.current;
       const isAtBottom = container.scrollHeight - container.clientHeight <= container.scrollTop + 100;
       
@@ -111,24 +100,21 @@ const ConversationDetail: React.FC = () => {
     };
 
     fetchConversationData();
-
-    // Connect to WebSocket
     if (id && user.id) {
       try {
         WebSocketService.connect(parseInt(id), user.id);
         
         const unsubscribe = WebSocketService.onMessage((data) => {
-          // Only add the message if it's not from the current user
           if (data.user_id !== user.id) {
             const sender = conversation?.participants.find((p: any) => p.id === data.user_id);
             if (sender) {
               const newMsg = {
-                id: Math.random(), // Temporary ID until refresh
+                id: Math.random(), 
                 sender,
                 content: data.message,
                 timestamp: new Date().toISOString(),
                 is_read: false,
-                status: MessageStatus.SENT, // Add this line
+                status: MessageStatus.SENT, 
                 reactions: []
               };
               setMessages(prev => [...prev, newMsg]);
@@ -145,16 +131,11 @@ const ConversationDetail: React.FC = () => {
       }
     }
   }, [id, navigate, currentUser.id, conversation]);
-
-  // Додаємо логування для перевірки
   useEffect(() => {
     console.log('Current user:', currentUser);
   }, [currentUser]);
-
-  // Оновлюємо ім'я чату при завантаженні розмови
   useEffect(() => {
     if (conversation) {
-      // Спочатку перевіряємо, чи є збережене ім'я для цього чату
       const savedName = localStorage.getItem(`chat_name_${conversation.id}`);
       if (savedName) {
         setChatName(savedName);
@@ -183,12 +164,10 @@ const ConversationDetail: React.FC = () => {
     
     setSending(true);
     try {
-      // Try to send via WebSocket first
       if (WebSocketService.isConnected()) {
         WebSocketService.sendMessage(newMessage, currentUser.id);
       }
       
-      // Always send via API to ensure message is saved
       const sentMessage = await sendMessage(parseInt(id), newMessage);
       setMessages(prev => [...prev, sentMessage]);
       setNewMessage('');
@@ -199,7 +178,6 @@ const ConversationDetail: React.FC = () => {
     }
   };
 
-  // Add this function to your ConversationDetail component
   const handleReactionUpdate = (messageId: number, updatedReactions: Reaction[]) => {
     setMessages(prevMessages => 
       prevMessages.map(msg => 
@@ -209,16 +187,11 @@ const ConversationDetail: React.FC = () => {
       )
     );
   };
-
-  // Add this function to your component
-  // Update the handleClearChat function to use conversation.id instead of conversationId
   const handleClearChat = async () => {
     if (window.confirm('Are you sure you want to clear all messages in this chat?')) {
       try {
-        await clearChat(conversation.id); // Use conversation.id instead of conversationId
-        // Clear messages in the state
+        await clearChat(conversation.id);
         setMessages([]);
-        // Show success message
         toast.success('Chat cleared successfully');
       } catch (error) {
         console.error('Error clearing chat:', error);
@@ -226,15 +199,11 @@ const ConversationDetail: React.FC = () => {
       }
     }
   };
-
-  // Add this function to your component
   const handleDeleteChat = async () => {
     if (window.confirm('Are you sure you want to delete this chat? This action cannot be undone.')) {
       try {
         await deleteChat(conversation.id);
-        // Show success message
         toast.success('Chat deleted successfully');
-        // Navigate back to conversations list
         navigate('/conversations');
       } catch (error) {
         console.error('Error deleting chat:', error);
@@ -252,13 +221,8 @@ const ConversationDetail: React.FC = () => {
   const handleSaveEdit = async () => {
     try {
       if (conversation && editedName.trim()) {
-        // Зберігаємо нове ім'я в localStorage
         localStorage.setItem(`chat_name_${conversation.id}`, editedName);
-        
-        // Оновлюємо стан
         setChatName(editedName);
-        
-        // Оновлюємо назву в списку чатів через подію
         const event = new CustomEvent('chatNameUpdated', {
           detail: { chatId: conversation.id, newName: editedName }
         });
@@ -276,6 +240,17 @@ const ConversationDetail: React.FC = () => {
     setShowDropdown(!showDropdown);
   };
 
+  const handleDeleteMessage = async (messageId: number) => {
+    try {
+      await deleteMessage(messageId);
+      setMessages(messages.filter(msg => msg.id !== messageId));
+      toast.success('Повідомлення видалено');
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      toast.error('Помилка при видаленні повідомлення');
+    }
+  };
+
   if (loading) {
     return <div className="text-center mt-5">Loading conversation...</div>;
   }
@@ -288,7 +263,7 @@ const ConversationDetail: React.FC = () => {
 
   return (
     <Container fluid className="h-100 d-flex flex-column p-0">
-      {/* Хедер чату */}
+      {}
       <div className="chat-header p-3 border-bottom">
         <div className="d-flex align-items-center justify-content-between">
           <div 
@@ -340,7 +315,7 @@ const ConversationDetail: React.FC = () => {
           </div>
         </div>
         
-        {/* Поле пошуку */}
+        {}
         {isSearching && (
           <div className="mt-2">
             <Form.Group className="d-flex align-items-center">
@@ -364,7 +339,7 @@ const ConversationDetail: React.FC = () => {
         )}
       </div>
 
-      {/* Модальне вікно з інформацією про користувача */}
+      {}
       <Modal 
         show={showUserInfo} 
         onHide={() => setShowUserInfo(false)}
@@ -434,7 +409,7 @@ const ConversationDetail: React.FC = () => {
         </Modal.Body>
       </Modal>
 
-      {/* Модальне вікно редагування контакту */}
+      {}
       <Modal
         show={showEditModal}
         onHide={() => setShowEditModal(false)}
@@ -466,25 +441,26 @@ const ConversationDetail: React.FC = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* Модальне вікно профілю */}
+      {}
       <ProfileModal
         show={showProfile}
         onHide={() => setShowProfile(false)}
         currentUser={currentUser}
       />
 
-      {/* Контейнер для повідомлень */}
+      {}
       <div className="flex-grow-1 messages-container overflow-auto p-3">
         {messages.map(message => (
           <Message
             key={message.id}
             message={message}
             isCurrentUser={String(currentUser.id) === String(message.sender.id)}
+            onDelete={handleDeleteMessage}
           />
         ))}
       </div>
 
-      {/* Форма відправки повідомлення */}
+      {}
       <div className="chat-footer p-3 border-top">
         <Form onSubmit={handleSendMessage}>
           <div className="d-flex">
