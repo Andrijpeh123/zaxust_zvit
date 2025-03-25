@@ -1,0 +1,172 @@
+.message-input-form {
+  padding: 12px;
+  background-color: white;
+  border-top: 1px solid #dee2e6;
+}
+
+.message-input-form .input-group {
+  background-color: #f8f9fa;
+  border-radius: 24px;
+  padding: 4px;
+}
+
+.message-input-form .form-control {
+  border: none;
+  background-color: transparent;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+.message-input-form .form-control:focus {
+  box-shadow: none;
+  background-color: transparent;
+}
+
+.message-input-form .input-group-text {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.attachment-button {
+  margin-right: 4px !important;
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  border: 1px solid #dee2e6 !important;
+  background-color: white !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #495057 !important;
+  transition: all 0.2s ease !important;
+}
+
+.attachment-button:hover {
+  background-color: #e9ecef !important;
+  border-color: #ced4da !important;
+  color: #212529 !important;
+}
+
+.attachment-button svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.send-button {
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  background-color: #0d6efd !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: none !important;
+  color: white !important;
+  transition: all 0.2s ease !important;
+}
+
+.send-button svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.send-button:hover {
+  background-color: #0b5ed7 !important;
+}
+
+.send-button:disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed;
+}
+
+.selected-file {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  animation: slideDown 0.2s ease-out;
+}
+
+.file-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-name {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-size {
+  font-size: 11px;
+  color: #6c757d;
+}
+
+.selected-file svg {
+  width: 16px !important;
+  height: 16px !important;
+  color: #6c757d;
+}
+
+.selected-file .remove-file {
+  padding: 4px !important;
+  color: #6c757d !important;
+  margin-left: auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.selected-file .remove-file:hover {
+  color: #dc3545 !important;
+  background-color: transparent !important;
+}
+
+.selected-file .remove-file svg {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.file-error {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fix for Bootstrap InputGroup.Text */
+.input-group > .input-group-text {
+  padding: 0;
+  line-height: 1;
+}
+
+/* Ensure icons are visible */
+.btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+} 

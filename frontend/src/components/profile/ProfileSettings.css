@@ -1,0 +1,91 @@
+.user-avatar {
+  transition: transform 0.2s;
+}
+
+.user-avatar:hover {
+  transform: scale(1.05);
+}
+
+.profile-info {
+  max-width: 600px;
+}
+
+.info-section {
+  margin-bottom: 2rem;
+}
+
+.info-section h5 {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.info-item {
+  margin-bottom: 1rem;
+}
+
+.info-item label {
+  display: block;
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.qr-code-container {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.qr-code-container img {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.qr-code-button {
+  transition: all 0.2s ease;
+}
+
+.qr-code-button:hover {
+  transform: scale(1.02);
+}
+
+.qr-code-icon {
+  font-size: 1.2rem;
+}
+
+.nav-tabs .nav-link {
+  color: #6c757d;
+  border: none;
+  padding: 1rem 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #0d6efd;
+  background-color: rgba(13, 110, 253, 0.1);
+  border-color: transparent;
+}
+
+.nav-tabs .nav-link.active {
+  color: #0d6efd;
+  background-color: transparent;
+  border-bottom: 2px solid #0d6efd;
+}
+
+.notification-settings {
+  max-width: 600px;
+}
+
+.notification-settings .form-check {
+  padding: 1rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.notification-settings .form-check:hover {
+  background-color: #f8f9fa;
+} 

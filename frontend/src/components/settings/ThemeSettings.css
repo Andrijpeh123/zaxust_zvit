@@ -1,0 +1,82 @@
+.theme-preview {
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.theme-preview:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.theme-preview.active {
+  outline: 3px solid var(--primary-color);
+  box-shadow: 0 0 0 6px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.preview-content {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.preview-header {
+  height: 40px;
+  width: 100%;
+  background-image: var(--gradient);
+}
+
+.preview-sidebar {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  bottom: 0;
+  width: 30%;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.preview-messages {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  bottom: 0;
+  width: 70%;
+  padding: 12px;
+}
+
+.preview-message {
+  height: 12px;
+  background-color: currentColor;
+  opacity: 0.2;
+  margin-bottom: 12px;
+  border-radius: 6px;
+}
+
+.theme-name {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 12px;
+  color: var(--text-color);
+}
+
+/* Анімація для активної теми */
+.theme-preview.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background: linear-gradient(45deg, var(--primary-color), transparent) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+} 
