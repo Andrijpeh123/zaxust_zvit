@@ -19,6 +19,8 @@
   align-items: flex-end;
   max-width: 70%;
   align-self: flex-end;
+  margin-left: auto;
+  margin-right: 0;
 }
 
 .message-content {
@@ -27,7 +29,9 @@
   padding: 8px 12px;
   border-radius: 12px;
   border-bottom-right-radius: 4px;
-  word-break: break-word;
+  word-break: normal;
+  white-space: normal;
+  display: block;
   position: relative;
   padding-right: 32px;
   min-height: 40px;
@@ -76,6 +80,19 @@
 
 .message-wrapper {
   margin-bottom: 8px;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-left: auto;
+}
+
+.message.own {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: 0;
 }
 
 .message-info {

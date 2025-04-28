@@ -268,6 +268,18 @@ const ConversationList: React.FC = () => {
               <i className="bi bi-palette me-2"></i>
               Тема
             </Link>
+            <div 
+              className="settings-item text-danger"
+              onClick={() => {
+                setShowSettings(false);
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = '/login';
+              }}
+            >
+              <i className="bi bi-box-arrow-right me-2"></i>
+              Вийти
+            </div>
           </div>
         </Offcanvas.Body>
       </Offcanvas>

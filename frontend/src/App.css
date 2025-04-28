@@ -148,6 +148,8 @@ body {
   display: flex;
   width: 100%;
   margin-bottom: 8px;
+  justify-content: flex-end;
+  margin-left: auto;
 }
 
 .current-user {
@@ -240,6 +242,7 @@ body {
   display: flex;
   margin-bottom: 8px;
   align-items: flex-start;
+  justify-content: flex-end;
 }
 
 .message-avatar {

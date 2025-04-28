@@ -118,6 +118,13 @@
   text-decoration: none;
 }
 
+.settings-item.text-danger {
+  color: #dc3545;
+  margin-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 15px;
+}
+
 .settings-item i {
   font-size: 1.2rem;
   width: 24px;
