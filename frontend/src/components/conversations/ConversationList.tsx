@@ -10,6 +10,7 @@ import UserSearch from '../users/UserSearch';
 import { getAvatarColor, getInitials } from '../../utils/avatarUtils';
 import { List, Bookmark, BellFill, ShieldLock, Palette } from 'react-bootstrap-icons';
 import './ConversationList.css';
+import ProfileModal from '../profile/ProfileModal';
 
 interface MessageProps {
   message: MessageType;
@@ -43,7 +44,11 @@ const ConversationList: React.FC = () => {
   const [savedMessagesEnabled, setSavedMessagesEnabled] = useState(() => {
     return localStorage.getItem('savedMessagesEnabled') === 'true';
   });
+  const [showProfileModal, setShowProfileModal] = useState(false);
   const navigate = useNavigate();
+
+  const currentTheme = localStorage.getItem('theme') || 'classic';
+
   useEffect(() => {
     const userStr = localStorage.getItem('user');
     if (!userStr) {
@@ -195,6 +200,12 @@ const ConversationList: React.FC = () => {
     localStorage.setItem('savedMessagesEnabled', String(newValue));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+  };
+
   if (loading) {
     return <div className="text-center p-4">Loading...</div>;
   }
@@ -221,21 +232,22 @@ const ConversationList: React.FC = () => {
         </div>
       </div>
 
-      {}
       <Offcanvas show={showSettings} onHide={() => setShowSettings(false)}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Налаштування</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div className="settings-menu">
-            <Link 
-              to="/settings/profile" 
+            <div 
               className="settings-item"
-              onClick={() => setShowSettings(false)}
+              onClick={() => {
+                setShowSettings(false);
+                navigate('/profile');
+              }}
             >
               <i className="bi bi-person-circle me-2"></i>
               Мій профіль
-            </Link>
+            </div>
             <div className="settings-item">
               <div className="d-flex justify-content-between align-items-center w-100">
                 <div className="d-flex align-items-center">
@@ -270,12 +282,7 @@ const ConversationList: React.FC = () => {
             </Link>
             <div 
               className="settings-item text-danger"
-              onClick={() => {
-                setShowSettings(false);
-                localStorage.removeItem('token');
-                localStorage.removeItem('user');
-                window.location.href = '/login';
-              }}
+              onClick={handleLogout}
             >
               <i className="bi bi-box-arrow-right me-2"></i>
               Вийти
@@ -284,9 +291,17 @@ const ConversationList: React.FC = () => {
         </Offcanvas.Body>
       </Offcanvas>
 
+      {showProfileModal && (
+        <ProfileModal 
+          show={showProfileModal} 
+          onHide={() => setShowProfileModal(false)} 
+          currentUser={JSON.parse(localStorage.getItem('user') || '{}')}
+          theme={currentTheme}
+        />
+      )}
+
       <div className="flex-grow-1 overflow-auto">
         <ListGroup variant="flush">
-          {}
           {savedMessagesEnabled && (
             <ListGroup.Item 
               action 
@@ -361,7 +376,6 @@ const ConversationList: React.FC = () => {
         />
       )}
 
-      {}
       {contextMenu.show && (
         <div 
           className="context-menu"

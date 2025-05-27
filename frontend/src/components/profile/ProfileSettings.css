@@ -1,79 +1,95 @@
 .user-avatar {
-  transition: transform 0.2s;
+  transition: transform 0.2s ease-in-out;
+  color: var(--text-color);
+  background-color: var(--primary-color);
+  border: 2px solid var(--border-color);
 }
 
 .user-avatar:hover {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .profile-info {
   max-width: 600px;
+  color: var(--text-color);
 }
 
 .info-section {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .info-section h5 {
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #dee2e6;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-weight: 600;
 }
 
 .info-item {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .info-item label {
   display: block;
-  color: #6c757d;
-  font-size: 0.875rem;
-  margin-bottom: 0.25rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
 }
 
 .qr-code-container {
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 12px;
+  background-color: var(--secondaryBg-color);
+  padding: 25px;
+  border-radius: 16px;
   display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .qr-code-container img {
-  border: 1px solid #dee2e6;
-  padding: 10px;
-  background-color: white;
-  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  background-color: var(--background-color);
+  border-radius: 12px;
 }
 
 .qr-code-button {
-  transition: all 0.2s ease;
+  transition: all 0.3s ease-in-out;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  border-radius: 8px;
 }
 
 .qr-code-button:hover {
-  transform: scale(1.02);
+  transform: translateY(-2px) scale(1.05);
+  background-color: var(--primary-color);
+  color: var(--background-color) !important;
+  box-shadow: 0 4px 8px rgba(var(--primary-color-rgb), 0.2);
 }
 
 .qr-code-icon {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .nav-tabs .nav-link {
-  color: #6c757d;
+  color: var(--text-color);
   border: none;
   padding: 1rem 1.5rem;
   transition: all 0.2s ease;
 }
 
 .nav-tabs .nav-link:hover {
-  color: #0d6efd;
-  background-color: rgba(13, 110, 253, 0.1);
+  color: var(--primary-color);
+  background-color: var(--hover-color);
   border-color: transparent;
 }
 
 .nav-tabs .nav-link.active {
-  color: #0d6efd;
+  color: var(--primary-color);
   background-color: transparent;
-  border-bottom: 2px solid #0d6efd;
+  border-bottom: 2px solid var(--primary-color);
+  font-weight: 600;
 }
 
 .notification-settings {
@@ -81,11 +97,143 @@
 }
 
 .notification-settings .form-check {
-  padding: 1rem;
-  border-radius: 8px;
+  padding: 1.2rem;
+  border-radius: 10px;
   transition: background-color 0.2s ease;
+  border: 1px solid var(--border-color);
 }
 
 .notification-settings .form-check:hover {
-  background-color: #f8f9fa;
+  background-color: var(--hover-color);
+}
+
+.notification-settings .form-check-label {
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.notification-settings .form-check-input:checked {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.card {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+  border: none !important;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+}
+
+.card-header {
+  background-color: var(--secondaryBg-color) !important;
+  color: var(--text-color) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.card .form-control {
+  background-color: var(--secondaryBg-color) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+.card .form-control:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.25) !important;
+}
+
+.card .btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--background-color) !important;
+  transition: all 0.3s ease;
+}
+
+.card .btn-primary:hover {
+  background-color: var(--primary-color) !important;
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(var(--primary-color-rgb), 0.2);
+}
+
+.card .btn-secondary {
+  background-color: var(--secondaryBg-color) !important;
+  border-color: var(--secondaryBg-color) !important;
+  color: var(--text-color) !important;
+  transition: all 0.3s ease;
+}
+
+.card .btn-secondary:hover {
+  background-color: var(--hover-color) !important;
+  border-color: var(--hover-color) !important;
+  color: var(--text-color) !important;
+  transform: translateY(-1px);
+}
+
+/* Styles for the User Profile Modal content */
+.profile-modal-content {
+    background-color: var(--background-color) !important; /* Use theme background color */
+    color: var(--text-color) !important; /* Set default text color to theme text color */
+    border: 1px solid var(--border-color) !important; /* Use theme border color */
+    border-radius: 12px; /* Match other themed components */
+}
+
+.profile-modal-content .modal-header {
+    background-color: var(--secondaryBg-color) !important; /* Use theme secondary background for header */
+    color: var(--text-color) !important; /* Use theme text color for header */
+    border-bottom: 1px solid var(--border-color) !important; /* Use theme border color for header border */
+    padding: 15px; /* Adjust padding */
+}
+
+.profile-modal-content .modal-header .modal-title {
+    color: var(--text-color) !important; /* Ensure title color is themed */
+    font-size: 1.2rem; /* Adjust title font size */
+    font-weight: 600; /* Make title bolder */
+}
+
+.profile-modal-content .modal-header .btn-close {
+    filter: invert(var(--filter-inversion, 0)) !important; /* Adjust close button color based on theme */
+}
+
+.profile-modal-content .modal-body {
+    background-color: var(--background-color) !important; /* Use theme background color for body */
+    color: var(--text-color) !important; /* Use theme text color for body */
+    padding: 20px; /* Adjust padding */
+}
+
+.profile-modal-content .user-avatar {
+    transition: transform 0.2s ease-in-out; /* Smoother transition */
+    /* color is handled by inline style in TSX for contrast on avatar background */
+    background-color: var(--primary-color) !important; /* Assuming avatar background uses primary color */
+    border: 2px solid var(--border-color) !important; /* Add a border based on theme */
+}
+
+.profile-modal-content .user-avatar:hover {
+    transform: scale(1.08); /* Slightly larger scale on hover */
+}
+
+/* Theme specific text elements within modal body */
+.profile-modal-content h4, 
+.profile-modal-content h5,
+.profile-modal-content label,
+.profile-modal-content .text-muted,
+.profile-modal-content .info-item div { /* Target values in info-items */
+     color: var(--text-color) !important; /* Force text color to theme text color */
+}
+
+.profile-modal-content .text-muted.small {
+     color: var(--text-color) !important; /* Force small muted text color */
+     opacity: 0.6; /* Adjust opacity */
+}
+
+.profile-modal-content .modal-body .info-item {
+    margin-bottom: 15px; /* Adjust spacing */
+}
+
+/* Theme notification switch label */
+.profile-modal-content .notification-settings label {
+    color: var(--text-color) !important; /* Force notification label color */
+    opacity: 1 !important; /* Ensure full opacity */
 } 

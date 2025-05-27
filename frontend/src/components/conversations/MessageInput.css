@@ -24,7 +24,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(var(--background-color-rgb), 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,20 +34,58 @@
 
 .drop-message {
   padding: 20px;
-  background-color: #f8f9fa;
+  background-color: var(--secondaryBg-color);
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   font-size: 18px;
-  color: #007bff;
+  color: var(--text-color);
   display: flex;
   align-items: center;
 }
 
 .selected-file {
-  background-color: #f8f9fa;
+  background-color: var(--secondaryBg-color);
   transition: all 0.3s ease;
+  color: var(--text-color);
 }
 
 .selected-file:hover {
-  background-color: #e9ecef;
+  background-color: var(--hover-color);
+}
+
+.form-control {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted-color);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--background-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.message-input-container .input-group {
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden; /* Ensure children respect border-radius */
+}
+
+.message-input-container .input-group .form-control {
+  border: none; /* Remove individual border since InputGroup has one */
+  box-shadow: none; /* Remove focus outline */
+}
+
+.message-input-container .input-group .btn {
+  border-color: var(--border-color); /* Ensure button border matches input group */
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Container, Card, Button, Form, Image } from 'react-bootstrap';
 import { QrCode } from 'react-bootstrap-icons';
 import { getAvatarColor, getInitials } from '../../utils/avatarUtils';
@@ -8,10 +8,10 @@ import './ProfileSettings.css';
 
 const ProfileSettings: React.FC = () => {
   const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user') || '{}'));
-  const [editMode, setEditMode] = useState(false);
-  const [username, setUsername] = useState(currentUser.username);
   const [loading, setLoading] = useState(true);
   const [showQRCode, setShowQRCode] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [currentThemeId, setCurrentThemeId] = useState(() => localStorage.getItem('theme') || 'classic');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -30,17 +30,33 @@ const ProfileSettings: React.FC = () => {
     fetchUserData();
   }, []);
 
+  // Effect to listen for changes in localStorage theme
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setCurrentThemeId(localStorage.getItem('theme') || 'classic');
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  const handleAvatarClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      console.log('Selected file:', file);
+    }
+  };
+
   if (loading) {
     return <div className="text-center py-5">Loading...</div>;
   }
-
-  const handleSave = async () => {
-    try {
-      setEditMode(false);
-    } catch (error) {
-      console.error('Error updating profile:', error);
-    }
-  };
 
   return (
     <Container className="py-4">
@@ -51,8 +67,8 @@ const ProfileSettings: React.FC = () => {
             <div className="d-flex align-items-center">
               <div 
                 className="user-avatar me-3"
-                style={{ 
-                  backgroundColor: getAvatarColor(currentUser.username),
+                style={{
+                  backgroundColor: currentUser.avatar ? 'transparent' : getAvatarColor(currentUser.username),
                   width: '100px',
                   height: '100px',
                   borderRadius: '50%',
@@ -60,10 +76,16 @@ const ProfileSettings: React.FC = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   fontSize: '40px',
-                  color: 'white'
+                  color: 'white',
+                  cursor: 'pointer'
                 }}
+                onClick={handleAvatarClick}
               >
-                {getInitials(currentUser.username)}
+                {currentUser.avatar ? (
+                  <Image src={currentUser.avatar} roundedCircle style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  getInitials(currentUser.username)
+                )}
               </div>
               <div>
                 <h3 className="mb-1">{currentUser.username}</h3>
@@ -72,62 +94,38 @@ const ProfileSettings: React.FC = () => {
             </div>
             <Button 
               variant="outline-primary"
-              onClick={() => setEditMode(true)}
             >
               Редагувати профіль
             </Button>
           </div>
 
-          {editMode ? (
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Ім'я користувача</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Form.Group>
-              <div className="d-flex justify-content-end gap-2">
-                <Button variant="secondary" onClick={() => setEditMode(false)}>
-                  Скасувати
-                </Button>
-                <Button variant="primary" onClick={handleSave}>
-                  Зберегти
-                </Button>
-              </div>
-            </Form>
-          ) : (
-            <div className="profile-info">
-              <div className="info-section">
-                <h5>Особиста інформація</h5>
-                <div className="info-item">
-                  <label>Ім'я користувача</label>
-                  <div>@{currentUser.username}</div>
-                </div>
-                <div className="info-item">
-                  <Button 
-                    variant="outline-primary" 
-                    className="d-flex align-items-center"
-                    onClick={() => setShowQRCode(true)}
-                  >
-                    <QrCode className="me-2" />
-                    Показати QR-код
-                  </Button>
-                </div>
-              </div>
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            accept="image/*"
+            onChange={handleFileChange}
+          />
 
-              <div className="info-section">
-                <h5>Налаштування сповіщень</h5>
-                <Form.Check 
-                  type="switch"
-                  id="notification-switch"
-                  label="Сповіщення про нові повідомлення"
-                  defaultChecked
-                />
+          <div className="profile-info">
+            <div className="info-section">
+              <h5>Особиста інформація</h5>
+              <div className="info-item">
+                <label>Ім'я користувача</label>
+                <div>@{currentUser.username}</div>
+              </div>
+              <div className="info-item">
+                <Button 
+                  variant="outline-primary" 
+                  className="d-flex align-items-center"
+                  onClick={() => setShowQRCode(true)}
+                >
+                  <QrCode className="me-2" />
+                  Показати QR-код
+                </Button>
               </div>
             </div>
-          )}
+          </div>
         </Card.Body>
       </Card>
 
@@ -135,6 +133,7 @@ const ProfileSettings: React.FC = () => {
         show={showQRCode}
         onHide={() => setShowQRCode(false)}
         user={currentUser}
+        currentThemeId={currentThemeId}
       />
     </Container>
   );

@@ -58,7 +58,7 @@ const Message: React.FC<MessageProps> = ({ message, isCurrentUser }) => {
       <Card 
         style={{ 
           maxWidth: '75%',
-          backgroundColor: isCurrentUser ? '#dcf8c6' : '#f0f0f0'
+          backgroundColor: isCurrentUser ? 'var(--primary-color)' : 'var(--secondaryBg-color)'
         }}
       >
         <Card.Body className="p-2">

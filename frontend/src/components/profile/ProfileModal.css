@@ -1,0 +1,46 @@
+.avatar-container {
+  position: relative;
+  /* Existing styles like width, height, border-radius, overflow, etc. */
+}
+
+.avatar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1; /* Ensure overlay is above avatar */
+}
+
+.avatar-container:hover .avatar-overlay {
+  opacity: 1;
+}
+
+.avatar-container:hover .avatar-overlay .bi-camera-fill { /* Target the camera icon within the overlay */
+  opacity: 1;
+}
+
+/* You might need to add styles for the CameraFill icon directly if not inside the overlay */
+/* For example: */
+.avatar-container .bi-camera-fill {
+    position: absolute;
+    bottom: 5px; /* Adjust position as needed */
+    right: 5px; /* Adjust position as needed */
+    background-color: white; /* White background for visibility */
+    border-radius: 50%;
+    padding: 4px;
+    border: 1px solid #ccc;
+    z-index: 2; /* Ensure icon is above overlay */
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.2s ease-in-out;
+}
+
+.avatar-container:hover .bi-camera-fill {
+    opacity: 1;
+} 

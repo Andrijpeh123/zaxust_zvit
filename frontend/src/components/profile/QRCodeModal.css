@@ -1,0 +1,53 @@
+.modal-header {
+  background-color: var(--secondaryBg-color) !important;
+  color: var(--text-color) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+}
+
+.modal-header .btn-close {
+  filter: invert(var(--filter-inversion, 0)) !important; 
+}
+
+.modal-body {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+.modal-body .text-muted {
+  color: var(--text-muted-color) !important;
+}
+
+/* Specific background color for the QR code container in the dark theme */
+.qr-code-container.dark {
+  background-color: #8774e1 !important; /* Dark theme primary color */
+}
+
+/* Styling for the download button */
+/* Remove previous outline styles */
+/*
+.modal-body.text-center .btn-outline-primary {
+  color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  background-color: transparent;
+}
+
+.modal-body.text-center .btn-outline-primary:hover {
+  color: var(--background-color) !important; /* Text color on hover */
+  background-color: var(--primary-color) !important; /* Background color on hover */
+  border-color: var(--primary-color) !important; /* Border color on hover */
+}
+*/
+
+/* Styling for the primary button */
+.modal-body.text-center .btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--background-color) !important; /* Use background color for text on solid primary button */
+}
+
+.modal-body.text-center .btn-primary:hover {
+  background-color: var(--primary-color) !important; /* Keep background primary on hover */
+  border-color: var(--primary-color) !important; /* Keep border primary on hover */
+  color: var(--text-color) !important; /* Use text color on hover for contrast */
+  opacity: 0.9; /* Slightly reduce opacity on hover */
+} 

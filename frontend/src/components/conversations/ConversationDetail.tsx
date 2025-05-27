@@ -35,6 +35,9 @@ const ConversationDetail: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
+  // Get current theme from localStorage
+  const currentTheme = localStorage.getItem('theme') || 'classic';
+
   useEffect(() => {
     if (searchTerm.trim() === '') {
       setFilteredMessages(messages);
@@ -446,6 +449,7 @@ const ConversationDetail: React.FC = () => {
         show={showProfile}
         onHide={() => setShowProfile(false)}
         currentUser={currentUser}
+        theme={currentTheme}
       />
 
       {}

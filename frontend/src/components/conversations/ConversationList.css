@@ -11,7 +11,7 @@
 .conversation-options {
   opacity: 0;
   transition: opacity 0.2s;
-  color: #6c757d;
+  color: var(--text-muted-color);
   padding: 0 8px;
 }
 
@@ -19,13 +19,16 @@
   opacity: 1;
 }
 
+.conversation-item:hover {
+  background-color: var(--hover-color);
+}
 
 .conversation-options::after {
   display: none !important;
 }
 
 .conversation-options:hover {
-  color: #000;
+  color: var(--text-color);
 }
 
 .dropdown-menu {
@@ -38,11 +41,11 @@
 }
 
 .dropdown-item:hover {
-  background-color: #f8f9fa;
+  background-color: var(--hover-color);
 }
 
 .pinned {
-  background-color: rgba(13, 110, 253, 0.05);
+  background-color: var(--pinned-color);
 }
 
 .pin-icon-container {
@@ -57,12 +60,13 @@
 }
 
 .context-menu {
-  background: white;
-  border: 1px solid #ddd;
+  background: var(--secondaryBg-color);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   padding: 4px 0;
   min-width: 150px;
+  color: var(--text-color);
 }
 
 .context-menu-item {
@@ -71,18 +75,19 @@
   transition: background-color 0.2s;
   display: flex;
   align-items: center;
+  color: var(--text-color);
 }
 
 .context-menu-item:hover {
-  background-color: #f8f9fa;
+  background-color: var(--hover-color);
 }
 
 .context-menu-item.delete {
-  color: #dc3545;
+  color: var(--danger-color);
 }
 
 .context-menu-item.delete:hover {
-  background-color: #dc3545;
+  background-color: var(--danger-color);
   color: white;
 }
 
@@ -98,12 +103,13 @@
 .settings-menu {
   display: flex;
   flex-direction: column;
+  /* background-color is set on offcanvas-body */
 }
 
 .settings-item {
   padding: 12px 16px;
   cursor: pointer;
-  color: inherit;
+  color: var(--text-color);
   text-decoration: none;
   transition: background-color 0.2s;
   border-radius: 8px;
@@ -113,15 +119,15 @@
 }
 
 .settings-item:hover {
-  background-color: #f8f9fa;
-  color: inherit;
+  background-color: var(--hover-color);
+  color: var(--text-color);
   text-decoration: none;
 }
 
 .settings-item.text-danger {
-  color: #dc3545;
+  color: var(--danger-color);
   margin-top: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--border-color);
   padding-top: 15px;
 }
 
@@ -129,10 +135,11 @@
   font-size: 1.2rem;
   width: 24px;
   text-align: center;
+  /* color is already set via parent .settings-item or will inherit */
 }
 
 .burger-menu {
-  color: #000;  
+  color: var(--text-color);  
   font-size: 28px;  
   cursor: pointer;
   padding: 4px;
@@ -145,7 +152,12 @@
 }
 
 .saved-messages-item {
-  background-color: var(--background-color);
+  background-color: var(--secondaryBg-color);
+  color: var(--text-color);
+}
+
+.saved-messages-item:hover {
+  background-color: var(--hover-color);
 }
 
 .saved-messages-avatar {
@@ -157,7 +169,7 @@
   align-items: center;
   justify-content: center;
   margin-right: 12px;
-  color: white;
+  color: var(--text-color);
 }
 
 .saved-messages-icon {
@@ -171,4 +183,51 @@
 .form-switch .form-check-input:checked {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
+}
+
+/* Styles for the Offcanvas settings menu */
+.offcanvas-header {
+  background-color: var(--secondaryBg-color) !important; /* Set header background to theme color */
+  color: var(--text-color) !important; /* Set header text color to theme color */
+  border-bottom: 1px solid var(--border-color) !important; /* Set header border color */
+}
+
+.offcanvas-header .btn-close {
+  filter: invert(var(--filter-inversion, 0)) !important; /* Adjust close button color based on theme */
+}
+
+.offcanvas-body {
+  background-color: var(--background-color) !important; /* Set body background to theme color */
+  color: var(--text-color) !important; /* Set body text color to theme color */
+}
+
+.conversation-info .text-muted {
+  color: var(--text-muted-color) !important;
+}
+
+/* Basic Scrollbar Styling (Optional but Recommended for Theming) */
+/* Target different browser scrollbars */
+
+/* Webkit (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color); /* Scrollbar track matches background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondaryBg-color); /* Scrollbar thumb matches secondary background */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-color); /* Darker thumb on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondaryBg-color) var(--background-color); /* thumb track */
 }

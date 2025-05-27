@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Button, Card, ListGroup, Badge, Spinner } from 'react-bootstrap';
 import { getUsers, startConversation } from '../../services/api';
 import { User, Conversation } from '../../types';
+import './NewConversation.css';
 
 interface NewConversationProps {
   onConversationCreated: (conversation: Conversation) => void;

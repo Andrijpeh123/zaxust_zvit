@@ -1,5 +1,6 @@
 body {
-  background-color: #f8f9fa;
+  background-color: var(--background-color);
+  color: var(--text-color) !important;
 }
 
 .chat-container {
@@ -157,8 +158,8 @@ body {
 }
 
 .current-user .message-card {
-  background-color: #0d6efd !important;
-  color: white;
+  background-color: var(--primary-color) !important;
+  color: var(--text-color);
   border-radius: 18px 18px 4px 18px;
   max-width: 85%;
   margin-left: auto;
@@ -168,9 +169,15 @@ body {
   justify-content: flex-start;
 }
 
+.other-user .message-bubble {
+  background-color: var(--secondaryBg-color) !important;
+  color: var(--text-color) !important;
+  border-bottom-left-radius: 4px;
+}
+
 .other-user .message-card {
-  background-color: #f0f2f5 !important;
-  color: #212529;
+  background-color: var(--secondaryBg-color) !important;
+  color: var(--text-color);
   border-radius: 18px 18px 18px 4px;
   max-width: 85%;
   margin-right: auto;
@@ -181,6 +188,7 @@ body {
   max-width: 50%;
   border-radius: 10px;
   font-size: 13px;
+  color: var(--text-color);
 }
 
 .current-user .text-white-50 {
@@ -189,7 +197,7 @@ body {
 
 .typing-indicator {
   padding: 8px;
-  color: #666;
+  color: var(--text-color);
   font-style: italic;
   font-size: 0.9em;
 }
@@ -209,21 +217,22 @@ body {
 .chat-layout {
   display: flex;
   height: calc(100vh - 56px);
-  background-color: #f8f9fa;
+  background-color: var(--background-color);
 }
 
 .conversations-sidebar {
   width: 350px;
-  border-right: 1px solid #dee2e6;
-  background-color: white;
+  border-right: 1px solid var(--border-color);
+  background-color: var(--secondaryBg-color);
   overflow-y: auto;
+  color: var(--text-color) !important;
 }
 
 .chat-main {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--secondaryBg-color) !important;
 }
 
 .chat-messages {
@@ -234,8 +243,9 @@ body {
 
 .chat-input {
   padding: 8px;
-  border-top: 1px solid #dee2e6;
-  background-color: white;
+  border-top: 1px solid var(--border-color) !important;
+  background-color: var(--chatBg-color) !important;
+  color: var(--text-color) !important;
 }
 
 .message-wrapper {
@@ -268,12 +278,29 @@ body {
 }
 
 .current-user .message-content {
-  background-color: #0d6efd;
-  color: white;
+  background-color: var(--primary-color) !important;
+  color: var(--text-color) !important;
   margin-left: auto;
 }
 
 .other-user .message-content {
-  background-color: #f0f2f5;
-  color: #1c1e21;
+  background-color: var(--secondaryBg-color) !important;
+  color: var(--text-color) !important;
+}
+
+.conversations-sidebar a {
+  /* Style for individual conversation items */
+  color: var(--text-color) !important;
+  text-decoration: none;
+  display: block;
+  padding: 10px 15px;
+  /* Ensure background is transparent to show sidebar background */
+  background-color: transparent !important; 
+}
+
+.conversations-sidebar a:hover,
+.conversations-sidebar a.active {
+  /* Use primary color for hover/active background */
+  background-color: var(--primary-color) !important;
+  color: var(--text-color) !important;
 }

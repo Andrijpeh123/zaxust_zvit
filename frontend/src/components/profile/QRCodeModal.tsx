@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Image, Button } from 'react-bootstrap';
+import { Modal, Image, Button, Form } from 'react-bootstrap';
 import { QrCode } from 'react-bootstrap-icons';
 import { User } from '../../types';
 
@@ -7,9 +7,10 @@ interface QRCodeModalProps {
   show: boolean;
   onHide: () => void;
   user: User;
+  currentThemeId: string;
 }
 
-const QRCodeModal: React.FC<QRCodeModalProps> = ({ show, onHide, user }) => {
+const QRCodeModal: React.FC<QRCodeModalProps> = ({ show, onHide, user, currentThemeId }) => {
   console.log('QRCodeModal user data:', user);
 
   const handleDownloadQR = () => {
@@ -31,17 +32,28 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ show, onHide, user }) => {
       <Modal.Body className="text-center">
         {user.qr_code && (
           <>
-            <Image 
-              src={user.qr_code} 
-              alt="QR Code" 
-              style={{ maxWidth: '250px' }} 
-              className="mb-3"
-            />
+            {/* Container for QR code image */}
+            <div 
+              className={`qr-code-container mb-3 ${currentThemeId}`}
+              style={{
+                 backgroundColor: 'var(--primary-color)', // Use theme primary color (dark purple)
+                 padding: '15px', // Increased padding slightly for visual separation
+                 borderRadius: '8px'
+              }}
+            >
+              <Image 
+                src={user.qr_code} 
+                alt="QR Code" 
+                style={{ maxWidth: '250px' }} 
+                className="img-fluid"
+              />
+            </div>
+            
             <div className="text-muted mb-3">
               ID: {user.unique_id}
             </div>
             <Button 
-              variant="outline-primary" 
+              variant="primary"
               onClick={handleDownloadQR}
               className="w-100"
             >

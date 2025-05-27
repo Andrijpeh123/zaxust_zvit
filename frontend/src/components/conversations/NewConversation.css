@@ -1,0 +1,89 @@
+.card {
+  background-color: var(--secondaryBg-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.card-header {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border-bottom-color: var(--border-color);
+}
+
+.card-body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.list-group {
+  border-color: var(--border-color);
+}
+
+.list-group-item {
+  background-color: var(--secondaryBg-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.list-group-item.active {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.list-group-item:hover {
+  background-color: var(--hover-color);
+}
+
+.list-group-item .text-muted {
+  color: var(--text-muted-color) !important;
+}
+
+.btn-secondary {
+  background-color: var(--secondaryBg-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.btn-secondary:hover {
+  background-color: var(--hover-color);
+  border-color: var(--hover-color);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--background-color) !important; /* Ensure text is readable on primary background */
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.card-body .form-control::placeholder {
+  color: var(--text-muted-color) !important;
+}
+
+/* Приклад для темної теми */
+body[class*="theme-dark"] input,
+body[class*="theme-dark"] textarea,
+body[class*="theme-dark"] .form-control {
+    background-color: #23272f !important;
+    color: #fff !important;
+    border: 1px solid #444 !important;
+}
+
+body[class^="theme-"] .message-input-form .input-group .form-control {
+  background-color: var(--secondaryBg-color) !important;
+  color: var(--text-color) !important;
+  border: none !important;
+  /* ... */
+}
+
+.theme-dark input,
+.theme-dark textarea,
+.theme-dark .form-control {
+    background-color: #23272f !important;
+    color: #fff !important;
+    border: 1px solid #444 !important;
+} 

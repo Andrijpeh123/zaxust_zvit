@@ -220,6 +220,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ conversationId, onMessageSe
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             disabled={sending}
+            style={{ backgroundColor: 'var(--secondaryBg-color)' }}
           />
           
           <Button 
